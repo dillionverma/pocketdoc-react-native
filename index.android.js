@@ -37,7 +37,8 @@ export default class pocketdocRN extends Component {
   constructor() {
     super();
     this.state = {
-         data: 'hi'
+        imageSource:'https://community.clarifai.com/uploads/default/_emoji/clarifai.png',
+        data: 'hi'
       }
   }
 
@@ -51,18 +52,23 @@ export default class pocketdocRN extends Component {
         console.log('ImagePicker Error: ', response.error);
       }
       else {
+
+        let source = 'data:image/jpeg;base64,' + response.data;
+        this.setState({imageSource: source});
+
+        console.log('uri:', ctx.state.imageSource)
         app.models.predict("Health", response.data).then(
-          function(response){
-            // console.log('promise response:', JSON.stringify(response.data.outputs[0].data.concepts[0].name));
-            // console.log('promise response:', JSON.stringify(response.data.outputs[0].data.concepts[0].value));
-            let myData = response.data.outputs[0].data.concepts[0].name;
+          function(res){
+            console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].name));
+            console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].value));
+            let myData = res.data.outputs[0].data.concepts[0].name;
             // console.log('mydata:', JSON.stringify(myData));
 
             ctx.setState({
                data: myData
             });
 
-            // console.log('state:', JSON.stringify(ctx.state.data));
+            console.log('state:', JSON.stringify(ctx.state.data));
 
           },
           function(err){
@@ -76,7 +82,7 @@ export default class pocketdocRN extends Component {
 
   render() {
     ctx = this;
-
+    console.log('render state:',this.state.imageSource);
 
     return (
       <View style={styles.container}>
@@ -105,6 +111,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center'
+  },
+  image: {
+    width: 200,
+    height:200
   },
   capture: {
     flex: 0,
