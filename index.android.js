@@ -87,7 +87,7 @@ export default class pocketdocRN extends Component {
     return (
       <View style={styles.container}>
         <TouchableHighlight onPress={this.selectImage.bind(this)}>
-          <Text>Select an image</Text>
+          <Text style={{fontSize: 20}}>Select an image</Text>
         </TouchableHighlight>
         <Image
           source={{uri: this.state.imageSource}}
@@ -104,13 +104,11 @@ export default class pocketdocRN extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
     flexDirection: 'row',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   image: {
     width: 200,
