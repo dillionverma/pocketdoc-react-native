@@ -8,17 +8,20 @@
  import {
    AppRegistry,
    Image,
+   Platform,
    base64image,
    ToastAndroid,
    Dimensions,
    StyleSheet,
    Text,
    TouchableHighlight,
-   View
+   View,
+   UIManager
  } from 'react-native';
  import Camera from 'react-native-camera';
  import Clarifai from 'clarifai';
  import ImagePicker from 'react-native-image-picker';
+ import { COLOR, Toolbar, ThemeProvider, ActionButton, Button} from 'react-native-material-ui';
 
  var app = new Clarifai.App(
    'f9Yuf8R8ya_1uG45M8mseffbd2rajohrdBOw9Dgc',
@@ -33,13 +36,27 @@
     maxWidth: 480
   };
 
+  const uiTheme = {
+      palette: {
+          primaryColor: COLOR.green500,
+      },
+      toolbar: {
+          container: {
+              height: 50,
+          },
+      },
+  };
 export default class pocketdocRN extends Component {
   constructor() {
     super();
     this.state = {
-        imageSource:'https://community.clarifai.com/uploads/default/_emoji/clarifai.png',
-        data: 'hi'
-      }
+      imageSource:'https://community.clarifai.com/uploads/default/_emoji/clarifai.png',
+      data: 'hi'
+    }
+      // Enable LayoutAnimation under Android
+    if (Platform.OS === 'android') {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
   }
 
   selectImage(){
@@ -85,16 +102,23 @@ export default class pocketdocRN extends Component {
     console.log('render state:',this.state.imageSource);
 
     return (
-      <View style={styles.container}>
-        <TouchableHighlight onPress={this.selectImage.bind(this)}>
-          <Text style={{fontSize: 20}}>Select an image</Text>
-        </TouchableHighlight>
-        <Image
-          source={{uri: this.state.imageSource}}
-          style={styles.image}
-        />
-        <Text>{this.state.data}</Text>
-      </View>
+      <ThemeProvider uiTheme={uiTheme}>
+        <View style={styles.container}>
+          <Toolbar
+            leftElement="menu"
+            centerElement="Searchable"
+          />
+          <TouchableHighlight onPress={this.selectImage.bind(this)}>
+            <Text style={{fontSize: 20}}>Select an image</Text>
+          </TouchableHighlight>
+          <Image
+            source={{uri: this.state.imageSource}}
+            style={styles.image}
+          />
+          <Text>{this.state.data}</Text>
+          <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
+        </View>
+    </ThemeProvider>
     );
   }
 }
@@ -104,23 +128,15 @@ export default class pocketdocRN extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+    alignItems: 'center'
 
   },
   image: {
     width: 200,
     height:200
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
   }
 });
 
