@@ -53,14 +53,16 @@ export default class pocketdocRN extends Component {
       else {
         app.models.predict("Health", response.data).then(
           function(response){
-            console.log('promise response:', JSON.stringify(response.data.outputs[0].data.concepts[0].name));
-            console.log('promise response:', JSON.stringify(response.data.outputs[0].data.concepts[0].value));
+            // console.log('promise response:', JSON.stringify(response.data.outputs[0].data.concepts[0].name));
+            // console.log('promise response:', JSON.stringify(response.data.outputs[0].data.concepts[0].value));
             let myData = response.data.outputs[0].data.concepts[0].name;
-            console.log('state:', JSON.stringify(myData));
+            // console.log('mydata:', JSON.stringify(myData));
 
-            this.setState({
+            ctx.setState({
                data: myData
             });
+
+            // console.log('state:', JSON.stringify(ctx.state.data));
 
           },
           function(err){
@@ -73,6 +75,9 @@ export default class pocketdocRN extends Component {
 
 
   render() {
+    ctx = this;
+
+
     return (
       <View style={styles.container}>
         <TouchableHighlight onPress={this.selectImage.bind(this)}>
