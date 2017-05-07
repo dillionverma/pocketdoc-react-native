@@ -28,6 +28,14 @@
    'dfXycYNdAE3XFOTZZgFuxMrPxihGhaFcmUsmuNbu'
  );
 
+ var options = {
+    title: 'Select an Image',
+    storageOptions: {
+      skipBackup: true,
+    },
+    maxWidth: 480
+  };
+
   const uiTheme = {
       palette: {
           primaryColor: COLOR.red500,
@@ -39,7 +47,7 @@
       },
   };
 
-  var symptom= {
+  var symptom = {
       cut: 'Apply bandaid to cut',
       bruise: 'Cover bruise'
    };
@@ -52,7 +60,8 @@ export default class pocketdocRN extends Component {
     this.state = {
       imageSource:'https://s3.ca-central-1.amazonaws.com/pocket-doc/Logomakr_1KXbWa.png',
       data: '1. Take picture of wound',
-      current: '2. Apply cure'
+      cure: '2. Apply cure',
+      accuracy: '0'
     }
       // Enable LayoutAnimation under Android
     if (Platform.OS === 'android') {
@@ -77,21 +86,23 @@ export default class pocketdocRN extends Component {
         console.log('uri:', ctx.state.imageSource)
         app.models.predict("Health", response.data).then(
           function(res){
-            console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].name));
-            console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].value));
+            // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].name));
+            // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].value));
             let myData = res.data.outputs[0].data.concepts[0].name;
+            let myAccuracy = Math.floor(res.data.outputs[0].data.concepts[0].value*100);
             // console.log('mydata:', JSON.stringify(myData));
 
             ctx.setState({
-               data: myData
+               data: myData,
+               accuracy: myAccuracy
             });
 
             if (ctx.state.data = 'cut') {
               ctx.setState({
-                current: cure.symptom
+                cure: symptom.cut
               });
             }
-            console.log('state:', JSON.stringify(ctx.state.data));
+            // console.log('state:', JSON.stringify(ctx.state.data));
 
           },
           function(err){
@@ -123,10 +134,11 @@ export default class pocketdocRN extends Component {
             </Card>
           </View>
             <Card>
-              <Text style={styles.response}>{this.state.data}</Text>
+              <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + this.state.data+ ", " + this.state.accuracy + "% accurate" : this.state.data }
+             </Text>
             </Card>
             <Card>
-              <Text style={styles.response}>{this.state.current}</Text>
+              <Text style={styles.response}>{'Cure: ' + this.state.cure}</Text>
             </Card>
           <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
         </View>
