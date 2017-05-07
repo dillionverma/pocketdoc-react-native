@@ -49,7 +49,9 @@
 
   var symptom = {
       cut: 'Cure: Apply bandaid to cut',
-      bruise: 'Cure: Cover bruise'
+      bruise: 'Cure: Cover bruise',
+      puncture: 'Cure: wrap bandage around puncture, hold in place',
+      shingles: 'Cure: Take Codeine for pain, rest in bed'
    };
 
 
@@ -83,27 +85,39 @@ export default class pocketdocRN extends Component {
         let source = 'data:image/jpeg;base64,' + response.data;
         this.setState({imageSource: source});
 
-        console.log('uri:', ctx.state.imageSource)
+        // console.log('uri:', ctx.state.imageSource)
         app.models.predict("Health", response.data).then(
           function(res){
-            // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].name));
+            console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts));
             // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].value));
             let myData = res.data.outputs[0].data.concepts[0].name;
             let myAccuracy = Math.floor(res.data.outputs[0].data.concepts[0].value*100);
-            // console.log('mydata:', JSON.stringify(myData));
+            console.log('mydata:', JSON.stringify(myData));
+
 
             ctx.setState({
                data: myData,
                accuracy: myAccuracy
             });
+            console.log('state:', JSON.stringify(ctx.state.data));
 
-            if (ctx.state.data = 'cut') {
+            if (ctx.state.data.localeCompare('Cut')) {
               ctx.setState({
                 cure: symptom.cut
               });
+            } else if (ctx.state.data.localeCompare('Bruise')) {
+              ctx.setState({
+                cure: symptom.bruise
+              });
+            } else if (ctx.state.data = 'puncture') {
+              ctx.setState({
+                cure: symptom.puncture
+              });
+            } else if (ctx.state.data = 'shingles') {
+              ctx.setState({
+                cure: symptom.shingles
+              });
             }
-            // console.log('state:', JSON.stringify(ctx.state.data));
-
           },
           function(err){
             console.log('promise error:', err);
@@ -116,7 +130,8 @@ export default class pocketdocRN extends Component {
 
   render() {
     ctx = this;
-    console.log('render state:',this.state.imageSource);
+    // console.log('render state:',this.state.imageSource);
+    console.log('state in render:', JSON.stringify(this.state.data));
 
     return (
       <ThemeProvider uiTheme={uiTheme}>
@@ -134,7 +149,7 @@ export default class pocketdocRN extends Component {
             </Card>
           </View>
             <Card>
-              <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + this.state.data+ ", " + this.state.accuracy + "% accurate" : this.state.data }
+              <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + ctx.state.data + ", " + this.state.accuracy + "% accurate" : this.state.data }
              </Text>
             </Card>
             <Card>
