@@ -28,14 +28,6 @@
    'dfXycYNdAE3XFOTZZgFuxMrPxihGhaFcmUsmuNbu'
  );
 
- var options = {
-    title: 'Select an Image',
-    storageOptions: {
-      skipBackup: true,
-    },
-    maxWidth: 480
-  };
-
   const uiTheme = {
       palette: {
           primaryColor: COLOR.red500,
@@ -46,12 +38,21 @@
           },
       },
   };
+
+  var symptom= {
+      cut: 'Apply bandaid to cut',
+      bruise: 'Cover bruise'
+   };
+
+
+
 export default class pocketdocRN extends Component {
   constructor() {
     super();
     this.state = {
       imageSource:'https://s3.ca-central-1.amazonaws.com/pocket-doc/Logomakr_1KXbWa.png',
-      data: 'hi'
+      data: '1. Take picture of wound',
+      current: '2. Apply cure'
     }
       // Enable LayoutAnimation under Android
     if (Platform.OS === 'android') {
@@ -85,6 +86,11 @@ export default class pocketdocRN extends Component {
                data: myData
             });
 
+            if (ctx.state.data = 'cut') {
+              ctx.setState({
+                current: cure.symptom
+              });
+            }
             console.log('state:', JSON.stringify(ctx.state.data));
 
           },
@@ -119,6 +125,9 @@ export default class pocketdocRN extends Component {
             <Card>
               <Text style={styles.response}>{this.state.data}</Text>
             </Card>
+            <Card>
+              <Text style={styles.response}>{this.state.current}</Text>
+            </Card>
           <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
         </View>
     </ThemeProvider>
@@ -138,7 +147,7 @@ const styles = StyleSheet.create({
   },
   response: {
     margin: 10,
-    fontSize: 40,
+    fontSize: 25,
     alignSelf: 'stretch'
   },
   image: {
