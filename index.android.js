@@ -38,7 +38,7 @@
 
   const uiTheme = {
       palette: {
-          primaryColor: COLOR.green500,
+          primaryColor: COLOR.red500,
       },
       toolbar: {
           container: {
@@ -106,11 +106,8 @@ export default class pocketdocRN extends Component {
         <View style={styles.container}>
           <Toolbar
             leftElement="menu"
-            centerElement="Searchable"
+            centerElement="PocketDoc"
           />
-          <TouchableHighlight onPress={this.selectImage.bind(this)}>
-            <Text style={{fontSize: 20}}>Select an image</Text>
-          </TouchableHighlight>
           <Image
             source={{uri: this.state.imageSource}}
             style={styles.image}
@@ -135,8 +132,8 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    width: 200,
-    height:200
+    height:350,
+    width: 350
   }
 });
 
