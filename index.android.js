@@ -21,7 +21,7 @@
  import Camera from 'react-native-camera';
  import Clarifai from 'clarifai';
  import ImagePicker from 'react-native-image-picker';
- import { COLOR, Toolbar, ThemeProvider, ActionButton, Button} from 'react-native-material-ui';
+ import { COLOR, Toolbar, ThemeProvider, ActionButton, Button, Card} from 'react-native-material-ui';
 
  var app = new Clarifai.App(
    'f9Yuf8R8ya_1uG45M8mseffbd2rajohrdBOw9Dgc',
@@ -50,7 +50,7 @@ export default class pocketdocRN extends Component {
   constructor() {
     super();
     this.state = {
-      imageSource:'https://community.clarifai.com/uploads/default/_emoji/clarifai.png',
+      imageSource:'https://s3.ca-central-1.amazonaws.com/pocket-doc/Logomakr_1KXbWa.png',
       data: 'hi'
     }
       // Enable LayoutAnimation under Android
@@ -104,15 +104,21 @@ export default class pocketdocRN extends Component {
     return (
       <ThemeProvider uiTheme={uiTheme}>
         <View style={styles.container}>
-          <Toolbar
+          <Toolbar style={styles.tool}
             leftElement="menu"
             centerElement="PocketDoc"
           />
-          <Image
-            source={{uri: this.state.imageSource}}
-            style={styles.image}
-          />
-          <Text>{this.state.data}</Text>
+          <View style={styles.incontainer}>
+            <Card>
+              <Image
+                source={{uri: this.state.imageSource}}
+                style={styles.image}
+              />
+            </Card>
+          </View>
+            <Card>
+              <Text style={styles.response}>{this.state.data}</Text>
+            </Card>
           <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
         </View>
     </ThemeProvider>
@@ -129,11 +135,16 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'center',
     alignItems: 'center'
-
+  },
+  response: {
+    margin: 10,
+    fontSize: 40,
+    alignSelf: 'stretch'
   },
   image: {
-    height:350,
-    width: 350
+    margin: 20,
+    height:300,
+    width: 300
   }
 });
 
