@@ -48,8 +48,8 @@
   };
 
   var symptom = {
-      cut: 'Apply bandaid to cut',
-      bruise: 'Cover bruise'
+      cut: 'Cure: Apply bandaid to cut',
+      bruise: 'Cure: Cover bruise'
    };
 
 
@@ -138,7 +138,7 @@ export default class pocketdocRN extends Component {
              </Text>
             </Card>
             <Card>
-              <Text style={styles.response}>{'Cure: ' + this.state.cure}</Text>
+              <Text style={styles.response}>{this.state.cure}</Text>
             </Card>
           <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
         </View>
