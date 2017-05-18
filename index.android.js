@@ -92,28 +92,29 @@ export default class pocketdocRN extends Component {
             // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].value));
             let myData = res.data.outputs[0].data.concepts[0].name;
             let myAccuracy = Math.floor(res.data.outputs[0].data.concepts[0].value*100);
-            console.log('mydata:', JSON.stringify(myData));
+            // console.log('mydata:', JSON.stringify(myData));
 
 
             ctx.setState({
                data: myData,
                accuracy: myAccuracy
             });
-            console.log('state:', JSON.stringify(ctx.state.data));
+            // console.log('state:', JSON.stringify(ctx.state.data));
+            // console.log(ctx.state.data.localeCompare('Bruise'));
 
-            if (ctx.state.data.localeCompare('Cut')) {
+            if (ctx.state.data.localeCompare('Cut') == 0) {
               ctx.setState({
                 cure: symptom.cut
               });
-            } else if (ctx.state.data.localeCompare('Bruise')) {
+            } else if (ctx.state.data.localeCompare('Bruise') == 0) {
               ctx.setState({
                 cure: symptom.bruise
               });
-            } else if (ctx.state.data = 'puncture') {
+            } else if (ctx.state.data.localeCompare('puncture') == 0) {
               ctx.setState({
                 cure: symptom.puncture
               });
-            } else if (ctx.state.data = 'shingles') {
+            } else if (ctx.state.data.localeCompare('shingles') == 0) {
               ctx.setState({
                 cure: symptom.shingles
               });
@@ -131,7 +132,8 @@ export default class pocketdocRN extends Component {
   render() {
     ctx = this;
     // console.log('render state:',this.state.imageSource);
-    console.log('state in render:', JSON.stringify(this.state.data));
+    // console.log('state in render:', JSON.stringify(this.state.data));
+    // console.log('cure in render:', JSON.stringify(this.state.cure));
 
     return (
       <ThemeProvider uiTheme={uiTheme}>
