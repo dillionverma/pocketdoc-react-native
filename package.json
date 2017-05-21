@@ -14,6 +14,7 @@
     "react-native": "0.44.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-image-picker": "^0.26.3",
+    "react-native-material-design": "^0.3.7",
     "react-native-material-ui": "^1.9.0",
     "react-native-simple-router": "^0.12.0",
     "react-native-vector-icons": "^4.1.0"

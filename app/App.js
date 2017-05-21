@@ -131,27 +131,30 @@ export default class pocketdocRN extends Component {
 
     return (
       <ThemeProvider uiTheme={uiTheme}>
-        <View style={styles.container}>
+        <View>
           <Toolbar style={styles.tool}
             leftElement="menu"
             centerElement="PocketDoc"
           />
-          <View style={styles.incontainer}>
+          <View>
             <Card>
               <Image
                 source={{uri: this.state.imageSource}}
                 style={styles.image}
               />
+              <Card>
+                <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + ctx.state.data + ", " + this.state.accuracy + "% accurate" : this.state.data }
+               </Text>
+              </Card>
+              <Card>
+                <Text style={styles.response}>{this.state.cure}</Text>
+              </Card>
+              <Card>
+                <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
+              </Card>
             </Card>
           </View>
-            <Card>
-              <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + ctx.state.data + ", " + this.state.accuracy + "% accurate" : this.state.data }
-             </Text>
-            </Card>
-            <Card>
-              <Text style={styles.response}>{this.state.cure}</Text>
-            </Card>
-          <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
+
         </View>
     </ThemeProvider>
     );
@@ -164,8 +167,8 @@ export default class pocketdocRN extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   response: {
@@ -174,9 +177,10 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch'
   },
   image: {
-    margin: 20,
-    height:300,
-    width: 300
+    alignSelf: 'center',
+    margin: 50,
+    height:380,
+    width: 380
   }
 });
 
