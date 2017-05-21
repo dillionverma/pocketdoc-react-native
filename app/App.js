@@ -45,7 +45,7 @@
       cut: 'Cure: Apply bandaid to cut',
       bruise: 'Cure: Cover bruise',
       puncture: 'Cure: wrap bandage around puncture, hold in place',
-      shingles: 'Cure: Take Codeine for pain, rest in bed'
+      shingles: 'Cure: Request over-the-counter acyclovir, famciclovir, or valacyclovir for pain. Rest until better.'
    };
 
 
@@ -93,7 +93,7 @@ export default class pocketdocRN extends Component {
                data: myData,
                accuracy: myAccuracy
             });
-            // console.log('state:', JSON.stringify(ctx.state.data));
+            console.log('state:', JSON.stringify(ctx.state.data));
             // console.log(ctx.state.data.localeCompare('Bruise'));
 
             if (ctx.state.data.localeCompare('Cut') == 0) {
@@ -104,11 +104,11 @@ export default class pocketdocRN extends Component {
               ctx.setState({
                 cure: symptom.bruise
               });
-            } else if (ctx.state.data.localeCompare('puncture') == 0) {
+            } else if (ctx.state.data.localeCompare('Puncture') == 0) {
               ctx.setState({
                 cure: symptom.puncture
               });
-            } else if (ctx.state.data.localeCompare('shingles') == 0) {
+            } else if (ctx.state.data.localeCompare('Shingles') == 0) {
               ctx.setState({
                 cure: symptom.shingles
               });
@@ -127,7 +127,7 @@ export default class pocketdocRN extends Component {
     ctx = this;
     // console.log('render state:',this.state.imageSource);
     // console.log('state in render:', JSON.stringify(this.state.data));
-    // console.log('cure in render:', JSON.stringify(this.state.cure));
+    console.log('cure in render:', JSON.stringify(this.state.cure));
 
     return (
       <ThemeProvider uiTheme={uiTheme}>
@@ -175,9 +175,9 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    margin: 50,
-    height:340,
-    width: 340
+    margin: 20,
+    height:300,
+    width: 300
   }
 });
 
