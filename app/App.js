@@ -137,13 +137,14 @@ export default class pocketdocRN extends Component {
             centerElement="PocketDoc"
           />
           <View>
-            <Card>
+              <Card>
               <Image
                 source={{uri: this.state.imageSource}}
                 style={styles.image}
               />
+              </Card>
               <Card>
-                <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + ctx.state.data + ", " + this.state.accuracy + "% accurate" : this.state.data }
+                <Text style={styles.response}>{ this.state.data != '1. Take picture of wound' ? "Symptom: " + ctx.state.data + ", " + this.state.accuracy + "% confidence" : this.state.data }
                </Text>
               </Card>
               <Card>
@@ -152,7 +153,6 @@ export default class pocketdocRN extends Component {
               <Card>
                 <Button raised accent onPress={this.selectImage.bind(this)} text="Take picture" />
               </Card>
-            </Card>
           </View>
 
         </View>
@@ -161,14 +161,11 @@ export default class pocketdocRN extends Component {
   }
 }
 
-
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   response: {
@@ -179,8 +176,8 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: 'center',
     margin: 50,
-    height:380,
-    width: 380
+    height:340,
+    width: 340
   }
 });
 
