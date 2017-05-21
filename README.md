@@ -1,5 +1,15 @@
-# pocketdoc-react-native
+# PocketDoc
 Pocketdoc is a mobile app which uses machine learning to advise cures to people with common recognizable symptoms
+
+![PocketDoc](https://s3.ca-central-1.amazonaws.com/pocket-doc/Main+1.png "PocketDoc")
+
+
+# Installation Instructions
+1. Go to directory and run `npm install`
+2. Connect android or ios phone to computer
+2. Run `react-native run-android` of `react-native run-ios`
+3. Run `react-native start`
+4. Open app on your android or ios phone.
 
 # Inspiration
 After reading the news and learning that 63 million people are faced with poverty every year in India due to healthcare expenditure alone, I was shocked. I had worked with image recognition and machine learning before so I set out to solve this problem in my own way.
