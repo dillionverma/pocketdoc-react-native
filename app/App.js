@@ -48,8 +48,6 @@
       shingles: 'Cure: Request over-the-counter acyclovir, famciclovir, or valacyclovir for pain. Rest until better.'
    };
 
-
-
 export default class pocketdocRN extends Component {
   constructor() {
     super();
@@ -59,7 +57,7 @@ export default class pocketdocRN extends Component {
       cure: '2. Apply cure',
       accuracy: '0'
     }
-      // Enable LayoutAnimation under Android
+
     if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
     }
@@ -82,7 +80,7 @@ export default class pocketdocRN extends Component {
         // console.log('uri:', ctx.state.imageSource)
         app.models.predict("Health", response.data).then(
           function(res){
-            console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts));
+            // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts));
             // console.log('promise response:', JSON.stringify(res.data.outputs[0].data.concepts[0].value));
             let myData = res.data.outputs[0].data.concepts[0].name;
             let myAccuracy = Math.floor(res.data.outputs[0].data.concepts[0].value*100);
@@ -93,7 +91,7 @@ export default class pocketdocRN extends Component {
                data: myData,
                accuracy: myAccuracy
             });
-            console.log('state:', JSON.stringify(ctx.state.data));
+            // console.log('state:', JSON.stringify(ctx.state.data));
             // console.log(ctx.state.data.localeCompare('Bruise'));
 
             if (ctx.state.data.localeCompare('Cut') == 0) {
@@ -127,7 +125,7 @@ export default class pocketdocRN extends Component {
     ctx = this;
     // console.log('render state:',this.state.imageSource);
     // console.log('state in render:', JSON.stringify(this.state.data));
-    console.log('cure in render:', JSON.stringify(this.state.cure));
+    // console.log('cure in render:', JSON.stringify(this.state.cure));
 
     return (
       <ThemeProvider uiTheme={uiTheme}>
